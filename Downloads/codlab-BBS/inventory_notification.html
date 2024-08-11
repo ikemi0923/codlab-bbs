@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在庫レベル通知 - 在庫管理アプリ</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <header>
+    <h1>在庫管理アプリ</h1>
+    <nav>
+      <ul>
+        <li><a href="index.php">ホーム</a></li>
+        <li><a href="dashboard.php">ダッシュボード</a></li>
+        <li><a href="inventory_notification.php">在庫レベル通知</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h2>在庫レベル通知設定</h2>
+    <form action="notification_process.php" method="post">
+      <ul>
+        <li>
+          <label for="item_id">アイテム:</label>
+          <select id="item_id" name="item_id" required>
+            <option value="1">商品A</option>
+            <option value="2">商品B</option>
+          </select>
+        </li>
+        <li>
+          <label for="threshold">しきい値:</label>
+          <input type="number" id="threshold" name="threshold" required>
+        </li>
+        <li>
+          <label for="notify">通知:</label>
+          <input type="checkbox" id="notify" name="notify">
+        </li>
+        <li>
+          <button type="submit">保存</button>
+        </li>
+      </ul>
+    </form>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 在庫管理アプリ. All rights reserved.</p>
+  </footer>
+</body>
+
+</html>

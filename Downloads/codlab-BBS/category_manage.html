@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>カテゴリ管理 - 在庫管理アプリ</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <header>
+    <h1>在庫管理アプリ</h1>
+    <nav>
+      <ul>
+        <li><a href="index.php">ホーム</a></li>
+        <li><a href="dashboard.php">ダッシュボード</a></li>
+        <li><a href="category_manage.php">カテゴリ管理</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h2>カテゴリ管理</h2>
+    <form action="category_add_process.php" method="post">
+      <ul>
+        <li>
+          <label for="category_name">カテゴリ名:</label>
+          <input type="text" id="category_name" name="category_name" required>
+        </li>
+        <li>
+          <button type="submit">追加</button>
+        </li>
+      </ul>
+    </form>
+
+    <h3>カテゴリ一覧</h3>
+    <ul class="category-list">
+      <li>
+        <span>カテゴリA</span>
+        <a href="category_edit.php?id=1">編集</a>
+        <a href="category_delete.php?id=1">削除</a>
+      </li>
+      <li>
+        <span>カテゴリB</span>
+        <a href="category_edit.php?id=2">編集</a>
+        <a href="category_delete.php?id=2">削除</a>
+      </li>
+    </ul>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 在庫管理アプリ. All rights reserved.</p>
+  </footer>
+</body>
+
+</html>

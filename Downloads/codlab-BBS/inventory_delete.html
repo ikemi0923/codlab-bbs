@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在庫アイテム削除 - 在庫管理アプリ</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <header>
+    <h1>在庫管理アプリ</h1>
+    <nav>
+      <ul>
+        <li><a href="index.php">ホーム</a></li>
+        <li><a href="dashboard.php">ダッシュボード</a></li>
+        <li><a href="inventory_list.php">在庫アイテム一覧</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h2>在庫アイテム削除</h2>
+    <p>本当にこのアイテムを削除しますか？</p>
+    <form action="inventory_delete_process.php" method="post">
+      <input type="hidden" name="item_id" value="削除するアイテムのID">
+      <button type="submit">削除</button>
+    </form>
+    <a href="inventory_list.php">キャンセル</a>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 在庫管理アプリ. All rights reserved.</p>
+  </footer>
+</body>
+
+</html>

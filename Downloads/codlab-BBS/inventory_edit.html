@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在庫アイテム編集 - 在庫管理アプリ</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <header>
+    <h1>在庫管理アプリ</h1>
+    <nav>
+      <ul>
+        <li><a href="index.php">ホーム</a></li>
+        <li><a href="dashboard.php">ダッシュボード</a></li>
+        <li><a href="inventory_list.php">在庫アイテム一覧</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h2>在庫アイテム編集</h2>
+    <form action="inventory_edit_process.php" method="post">
+      <ul>
+        <li>
+          <label for="item_name">商品名:</label>
+          <input type="text" id="item_name" name="item_name" value="既存の商品名" required>
+        </li>
+        <li>
+          <label for="quantity">数量:</label>
+          <input type="number" id="quantity" name="quantity" value="既存の数量" required>
+        </li>
+        <li>
+          <button type="submit">更新</button>
+        </li>
+      </ul>
+    </form>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 在庫管理アプリ. All rights reserved.</p>
+  </footer>
+</body>
+
+</html>
