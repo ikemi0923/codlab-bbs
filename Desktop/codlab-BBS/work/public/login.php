@@ -1,5 +1,4 @@
 <?php
-// config.phpを読み込んでデータベース接続を行う
 require_once '../app/config.php';
 
 session_start();
@@ -9,17 +8,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $password = $_POST['password'];
 
   try {
-    // データベースからユーザー名に一致する情報を取得
     $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
     $stmt->execute([$username]);
     $user = $stmt->fetch();
 
-    // ユーザーが見つかり、パスワードが一致する場合
     if ($user && password_verify($password, $user['password'])) {
       $_SESSION['user_id'] = $user['id'];
       $_SESSION['username'] = $user['username'];
       echo "ログインに成功しました！";
-      // ダッシュボードやメインページにリダイレクトするコードをここに追加
+header("Location: index.php");
     } else {
       echo "ユーザー名またはパスワードが間違っています。";
     }

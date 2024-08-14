@@ -1,7 +1,6 @@
 <?php
 session_start();
-session_destroy(); // セッションを破棄
+session_destroy();
 
-// ログインページにリダイレクト
 header("Location: login.php");
 exit();

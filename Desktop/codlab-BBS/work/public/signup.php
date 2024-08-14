@@ -1,5 +1,4 @@
 <?php
-// config.phpを読み込んでデータベース接続を行う
 require_once '../app/config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -8,16 +7,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $password = $_POST['password'];
   $confirm_password = $_POST['confirm_password'];
 
-  // パスワードの確認が一致するかチェック
   if ($password != $confirm_password) {
     echo "パスワードが一致しません。";
     exit;
   }
 
-  // パスワードをハッシュ化
   $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-  // データベースにユーザー情報を挿入
   try {
     $stmt = $pdo->prepare("INSERT INTO users (username, email, password, created, modified) VALUES (?, ?, ?, NOW(), NOW())");
     $stmt->execute([$username, $email, $password_hash]);

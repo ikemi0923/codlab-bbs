@@ -2,7 +2,6 @@
 require '../app/config.php';
 
 
-// データベース接続の確認
 try {
   $stmt = $pdo->query('SELECT 1');
   echo "データベース接続に成功しました";
