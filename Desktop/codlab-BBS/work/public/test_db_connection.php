@@ -8,3 +8,5 @@ try {
 } catch (PDOException $e) {
   echo "データベース接続に失敗しました: " . $e->getMessage();
 }
+
+
