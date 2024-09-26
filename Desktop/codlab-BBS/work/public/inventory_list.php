@@ -1,27 +1,53 @@
 <?php
 require '../app/config.php';
 
-$inventory_items = $pdo->query('SELECT inventory_items.id, inventory_items.name, inventory_items.quantity, inventory_items.image, categories.name AS category_name FROM inventory_items LEFT JOIN categories ON inventory_items.category_id = categories.id');
-include 'header.php';
+$items = $pdo->query('
+    SELECT inventory_items.*, 
+           categories.name AS category_name, 
+           (SELECT image FROM inventory_images WHERE inventory_images.item_id = inventory_items.id LIMIT 1) AS first_image,
+           inventory_items.threshold
+    FROM inventory_items 
+    LEFT JOIN categories ON inventory_items.category_id = categories.id
+')->fetchAll(PDO::FETCH_ASSOC);
+if (!defined('HEADER_INCLUDED')) {
+    define('HEADER_INCLUDED', true);
+    include 'header.php';
+}
 ?>
 
 <main>
     <h2>在庫アイテム一覧</h2>
-    <ul>
-        <?php while ($row = $inventory_items->fetch(PDO::FETCH_ASSOC)): ?>
-            <li>
-                <?php if ($row['image']): ?>
-                    <img src="uploads/<?php echo htmlspecialchars($row['image'], ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8'); ?>">
-                <?php endif; ?>
-                <strong>アイテム名:</strong> <?php echo htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8'); ?><br>
-                <strong>カテゴリー:</strong> <?php echo htmlspecialchars($row['category_name'], ENT_QUOTES, 'UTF-8'); ?><br>
-                <strong>数量:</strong> <?php echo htmlspecialchars($row['quantity'], ENT_QUOTES, 'UTF-8'); ?><br>
-                <a href="inventory_edit.php?id=<?php echo $row['id']; ?>">編集</a> |
-                <a href="inventory_delete.php?id=<?php echo $row['id']; ?>" onclick="return confirm('削除してもよろしいですか？');">削除</a>
-            </li>
-        <?php endwhile; ?>
-    </ul>
-    <p><a href="inventory_add.php">在庫アイテムを追加</a></p>
+    <div class="item-container">
+        <?php foreach ($items as $item): ?>
+            <div class="item-card">
+                <img src="<?php echo !empty($item['first_image']) ? 'uploads/' . htmlspecialchars($item['first_image'], ENT_QUOTES, 'UTF-8') : 'no_image.png'; ?>" alt="Item Image">
+                <p>アイテム名: <?php echo htmlspecialchars($item['name'], ENT_QUOTES, 'UTF-8'); ?></p>
+                <p>カテゴリー: <?php echo !empty($item['category_name']) ? htmlspecialchars($item['category_name'], ENT_QUOTES, 'UTF-8') : 'Unknown Category'; ?></p>
+                <p>数量: <?php echo htmlspecialchars($item['quantity'], ENT_QUOTES, 'UTF-8'); ?></p>
+                <p>しきい値: 
+                    <?php 
+                    if (!empty($item['threshold'])) {
+                        echo htmlspecialchars($item['threshold'], ENT_QUOTES, 'UTF-8'); 
+                    } else {
+                        echo '未設定';
+                    }
+                    ?>
+                </p>
+                <p>
+                    <a href="inventory_edit.php?id=<?php echo $item['id']; ?>">編集</a> |
+                    <a href="inventory_delete.php?id=<?php echo $item['id']; ?>" onclick="return confirm('本当に削除しますか？');">削除</a> |
+                    <a href="inventory_detail.php?id=<?php echo $item['id']; ?>">詳細を見る</a>
+                </p>
+            </div>
+        <?php endforeach; ?>
+    </div>
+
+    <div class="add-item-button">
+        <a href="inventory_add.php" class="btn">在庫アイテムを追加</a>
+    </div>
 </main>
 
-<?php include 'footer.php'; ?>
+<footer class="footer">
+    <p>&copy; 2024 Codlab BBS. All rights reserved.</p>
+</footer>
+

@@ -1,21 +1,27 @@
 <?php
 require '../app/config.php';
 
-$id = $_GET['id'];
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    $id = $_GET['id'];
 
-try {
-    $stmt = $pdo->prepare('DELETE FROM inventory_items WHERE id = :id');
-    $stmt->bindParam(':id', $id);
-    $stmt->execute();
-    echo "在庫アイテムを削除しました。";
-} catch (PDOException $e) {
-    echo "在庫アイテムの削除に失敗しました: " . $e->getMessage();
+    try {
+        $stmt = $pdo->prepare('DELETE FROM activity_log WHERE item_id = :id');
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $stmt = $pdo->prepare('DELETE FROM notifications WHERE item_id = :id');
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $stmt = $pdo->prepare('DELETE FROM inventory_images WHERE item_id = :id');
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $stmt = $pdo->prepare('DELETE FROM inventory_items WHERE id = :id');
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+
+        echo "在庫アイテムを削除しました。";
+        header("Location: inventory_list.php");
+        exit();
+    } catch (PDOException $e) {
+        echo "在庫アイテムの削除に失敗しました: " . $e->getMessage();
+    }
 }
-include 'header.php';
-?>
-
-<main>
-    <p><a href="inventory_list.php">在庫リストに戻る</a></p>
-</main>
-
-<?php include 'footer.php'; ?>

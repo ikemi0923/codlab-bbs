@@ -12,14 +12,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute([$username]);
     $user = $stmt->fetch();
 
-    if ($user && password_verify($password, $user['password'])) {
+    if ($user && $password === $user['password']) {
       $_SESSION['user_id'] = $user['id'];
       $_SESSION['username'] = $user['username'];
       echo "ログインに成功しました！";
-header("Location: index.php");
+      header("Location: index.php");
     } else {
       echo "ユーザー名またはパスワードが間違っています。";
     }
+
   } catch (PDOException $e) {
     echo "エラー: " . $e->getMessage();
   }

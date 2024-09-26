@@ -1,11 +1,22 @@
-<?php
-require '../app/config.php';
-include 'header.php';
-?>
+<!DOCTYPE html>
+<html lang="ja">
 
-<main>
-    <h2>ホーム</h2>
-    <p>在庫管理アプリへようこそ。</p>
-</main>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在庫管理アプリ</title>
+    <link rel="stylesheet" href="path/to/your/styles.css">
+</head>
 
-<?php include 'footer.php'; ?>
+<body>
+    <?php include 'header.php'; ?>
+
+    <main>
+        <h2>ホーム</h2>
+        <p>在庫管理アプリへようこそ。</p>
+    </main>
+    <?php include 'footer.php'; ?>
+
+</body>
+
+</html>
