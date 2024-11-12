@@ -9,13 +9,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
     $quantity = $_POST['quantity'];
     $threshold = $_POST['threshold'];
     $remarks = $_POST['remarks'] ?? '';
+    $price = $_POST['price']; 
 
-    $stmt = $pdo->prepare("UPDATE inventory_items SET name = :name, category_id = :category_id, quantity = :quantity, threshold = :threshold, remarks = :remarks, modified = NOW() WHERE id = :id");
+    $stmt = $pdo->prepare("UPDATE inventory_items SET name = :name, category_id = :category_id, quantity = :quantity, threshold = :threshold, remarks = :remarks, price = :price, modified = NOW() WHERE id = :id");
     $stmt->bindParam(':name', $name);
     $stmt->bindParam(':category_id', $category_id);
     $stmt->bindParam(':quantity', $quantity);
     $stmt->bindParam(':threshold', $threshold);
     $stmt->bindParam(':remarks', $remarks);
+    $stmt->bindParam(':price', $price);
     $stmt->bindParam(':id', $item_id);
 
     if ($stmt->execute()) {

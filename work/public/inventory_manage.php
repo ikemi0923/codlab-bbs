@@ -90,6 +90,10 @@ if ($item['quantity'] < $item['threshold'] && $item['notify']) {
                 <input type="text" id="remarks" name="remarks" value="<?php echo htmlspecialchars($item['remarks'], ENT_QUOTES, 'UTF-8'); ?>" placeholder="任意">
             </li>
             <li>
+                <label for="price">価格:</label>
+                <input type="text" id="price" name="price" value="<?php echo htmlspecialchars($item['price'], ENT_QUOTES, 'UTF-8'); ?>" required> 
+            </li>
+            <li>
                 <button type="submit" class="btn-primary">保存</button>
             </li>
         </ul>
@@ -104,7 +108,7 @@ if ($item['quantity'] < $item['threshold'] && $item['notify']) {
         <label>
             <input type="checkbox" name="notification_enabled" <?php echo $item['notify'] ? 'checked' : ''; ?>> 通知を有効にする
         </label>
-        <button type="submit" class="btn-secondary">設定を保存</button>
+        <button type="submit" class="btn-manage-secondary">設定を保存</button>
     </form>
 </section>
 
@@ -115,20 +119,26 @@ if ($item['quantity'] < $item['threshold'] && $item['notify']) {
         <input type="hidden" name="item_id" value="<?php echo htmlspecialchars($item['id'], ENT_QUOTES, 'UTF-8'); ?>">
         <label for="images">画像を追加:</label>
         <input type="file" name="images[]" id="images" multiple>
-        <button type="submit" class="btn-secondary">画像をアップロード</button>
+        <button type="submit" class="btn-manage-secondary">画像をアップロード</button>
     </form>
 
     <div id="image-gallery" class="image-gallery">
+    <?php if (!empty($images)): ?>
         <?php foreach ($images as $image): ?>
             <div class="image-item" data-id="<?php echo htmlspecialchars($image['id'], ENT_QUOTES, 'UTF-8'); ?>">
                 <img src="uploads/<?php echo htmlspecialchars($image['image'], ENT_QUOTES, 'UTF-8'); ?>" alt="Image">
-                <form action="inventory_image_delete.php" method="post">
-                    <input type="hidden" name="image_id" value="<?php echo htmlspecialchars($image['id'], ENT_QUOTES, 'UTF-8'); ?>">
-                    <button type="submit" class="btn-danger">削除</button>
-                </form>
+                <button type="button" class="image-item-delete-btn" data-image-id="<?php echo htmlspecialchars($image['id'], ENT_QUOTES, 'UTF-8'); ?>">削除</button>
             </div>
         <?php endforeach; ?>
-    </div>
+    <?php else: ?>
+        <p>画像はありません。</p>
+    <?php endif; ?>
+</div>
+
+
+
+</div>
+
 </section>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
@@ -151,10 +161,43 @@ if ($item['quantity'] < $item['threshold'] && $item['notify']) {
         }
     });
 </script>
+<script>
+    document.querySelectorAll('.image-item-delete-btn').forEach(button => {
+        button.addEventListener('click', function(event) {
+            const confirmation = confirm("本当に削除しますか？");
+
+            if (!confirmation) {
+                event.preventDefault();
+            } else {
+                const imageId = this.getAttribute('data-image-id');
+                const formData = new FormData();
+                formData.append('image_id', imageId);
+                
+                fetch('inventory_image_delete.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        this.closest('.image-item').remove();
+                    } else {
+                        alert('削除に失敗しました。');
+                    }
+                })
+                .catch(error => {
+                    console.error('エラー:', error);
+                    alert('エラーが発生しました。');
+                });
+            }
+        });
+    });
+</script>
+
 
 
 <form action="inventory_update_process.php" method="post">
-    <button type="submit" class="btn-primary">全体の編集内容を保存</button>
+    <button type="submit" class="btn-save-center">全体の編集内容を保存</button>
 </form>
 
 

@@ -14,7 +14,7 @@ $query = '
     SELECT inventory_items.*, 
            categories.name AS category_name, 
            (SELECT image FROM inventory_images WHERE inventory_images.item_id = inventory_items.id LIMIT 1) AS first_image,
-           inventory_items.threshold
+           inventory_items.threshold,inventory_items.price
     FROM inventory_items 
     LEFT JOIN categories ON inventory_items.category_id = categories.id
     LIMIT :offset, :itemsPerPage
@@ -42,6 +42,11 @@ include 'header.php';
                 <p>しきい値: 
                     <?php 
                     echo !empty($item['threshold']) ? htmlspecialchars($item['threshold'], ENT_QUOTES, 'UTF-8') : '未設定';
+                    ?>
+                </p>
+                <p>価格: 
+                    <?php 
+                    echo !empty($item['price']) ? htmlspecialchars($item['price'], ENT_QUOTES, 'UTF-8') : '未設定';
                     ?>
                 </p>
 
