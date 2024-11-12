@@ -57,6 +57,10 @@ include 'header.php';
           <input type="number" id="threshold" name="threshold" placeholder="任意">
         </li>
         <li>
+      <label for="price">価格:</label> 
+      <input type="text" id="price" name="price" required> 
+    </li>
+        <li>
           <label for="images">画像を追加:</label>
           <input type="file" name="images[]" id="images" multiple>
         </li>

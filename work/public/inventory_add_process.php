@@ -7,15 +7,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $category_id = (int)$_POST['category_id'];
     $quantity = (int)$_POST['quantity'];
     $threshold = isset($_POST['threshold']) ? (int)$_POST['threshold'] : null;
+    $price = isset($_POST['price']) ? (float)$_POST['price'] : null; 
     $images = $_FILES['images'];
 
     try {
-        $stmt = $pdo->prepare('INSERT INTO inventory_items (name, category_id, quantity, threshold, created, modified) 
-                               VALUES (:name, :category_id, :quantity, :threshold, NOW(), NOW())');
+        $stmt = $pdo->prepare('INSERT INTO inventory_items (name, category_id, quantity, threshold, price, created, modified) 
+        VALUES (:name, :category_id, :quantity, :threshold, :price, NOW(), NOW())');
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
         $stmt->bindParam(':category_id', $category_id, PDO::PARAM_INT);
         $stmt->bindParam(':quantity', $quantity, PDO::PARAM_INT);
         $stmt->bindParam(':threshold', $threshold, PDO::PARAM_INT);
+        $stmt->bindParam(':price', $price, PDO::PARAM_STR);
         $stmt->execute();
         $item_id = $pdo->lastInsertId();
 
