@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   db:
     build: ./mysql
@@ -7,7 +6,7 @@ services:
       MYSQL_ROOT_PASSWORD: 'root'
       MYSQL_DATABASE: codlab_bbs_db
     volumes:
-      - db-data:/var/lib/mysql
+      - codlab-bbs_db-data:/var/lib/mysql
   php:
     build: ./php
     depends_on:
@@ -25,4 +24,5 @@ services:
     ports:
       - 8080:80
 volumes:
-  db-data:
+  codlab-bbs_db-data:
+  
