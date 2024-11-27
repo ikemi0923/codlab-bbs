@@ -1,8 +1,4 @@
 <?php
-define('DB_HOST', 'db');
-define('DB_NAME', 'codlab_bbs_db');
-define('DB_USER', 'root');
-define('DB_PASS', 'root');
 
 $db_host = 'db';
 $db_name = 'codlab_bbs_db';
