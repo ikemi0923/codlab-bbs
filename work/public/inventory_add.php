@@ -32,6 +32,8 @@ include 'header.php';
     ?>
 
     <form action="inventory_add_process.php" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8'); ?>">
+
       <ul>
         <li>
           <label for="name">アイテム名:</label>
@@ -58,8 +60,8 @@ include 'header.php';
         </li>
         <li>
       <label for="price">価格:</label> 
-      <input type="text" id="price" name="price" required> 
-    </li>
+      <input type="number" id="price" name="price" required step="1">
+
         <li>
           <label for="images">画像を追加:</label>
           <input type="file" name="images[]" id="images" multiple>
